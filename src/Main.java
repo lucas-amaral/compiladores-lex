@@ -16,9 +16,9 @@ public class Main {
             System.setOut(new PrintStream(arquivoSaida));
         } catch (Exception e) {/**/}
         m = new Main();
-        m.inicia();
-        if (m.getFout() != null) {
-            m.getFout().close();
-        }
+//        m.inicia();
+//        if (m.getFout() != null) {
+//            m.getFout().close();
+//        }
     }
 }
