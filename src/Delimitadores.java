@@ -6,11 +6,15 @@ import java.util.Collection;
  */
 public class Delimitadores {
     public static String DOIS_PONTOS = ":";
+    public static String ABRE_CONCHETE = "[";
+    public static String FECHA_CONCHETE = "]";
 
     public static Collection<String> delimitadores = new ArrayList<String>();
 
     static {
         delimitadores.add(DOIS_PONTOS);
+        delimitadores.add(ABRE_CONCHETE);
+        delimitadores.add(FECHA_CONCHETE);
     }
 
     public Boolean getDelimitador(String token) {
