@@ -8,6 +8,7 @@ public class Delimitadores {
     public static String DOIS_PONTOS = ":";
     public static String ABRE_CONCHETE = "[";
     public static String FECHA_CONCHETE = "]";
+    public static String PONTO = ".";
 
     public static Collection<String> delimitadores = new ArrayList<String>();
 
@@ -15,6 +16,7 @@ public class Delimitadores {
         delimitadores.add(DOIS_PONTOS);
         delimitadores.add(ABRE_CONCHETE);
         delimitadores.add(FECHA_CONCHETE);
+        delimitadores.add(PONTO);
     }
 
     public Boolean getDelimitador(String token) {
