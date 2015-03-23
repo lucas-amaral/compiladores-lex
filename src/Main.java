@@ -65,7 +65,8 @@ public class Main {
                 System.out.println(chave + " - palavra reservada");
             } else if (Delimitadores.delimitadores.contains(chave)) {
                 System.out.println(chave + " - delimitador");
-            } else if (chave.matches("[a-zA-z]([a-zA-z]|[0-9]|_)*")) {
+            } else if (chave.matches("[a-zA-Z]([a-zA-Z]|[0-9]|_)*(\\([a-zA-Z]([a-zA-Z]|[0-9]|_)*\\))*")
+                    || chave.matches("[a-zA-Z]([a-zA-Z]|[0-9]|_)*#\\[[a-zA-Z]([a-zA-Z]|[0-9]|_)*\\]")) {
                 System.out.println(chave + " - identificador");
             } else {
                 System.out.println("[ERRO] Token não reconhecido linha " + linha + ", coluna " + coluna);
