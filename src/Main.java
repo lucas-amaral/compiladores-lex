@@ -2,7 +2,6 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
     private static Main m;
@@ -40,10 +39,20 @@ public class Main {
         if (chave.endsWith(":") && chave.split(":").length == 1) {
             getGravaToken(chave.split(":")[0], linha, coluna);
             getGravaToken(":", linha, coluna);
-        } else if (chave.matches("\\[+[a-zA-z]([a-zA-Z]|[0-9]|_)*+(,|\\])")) {
-            for (String token : chave.split("\\[+[a-zA-z]([a-zA-Z]|[0-9]|_)*+(,|\\])")) {
-                getGravaToken(token, linha, coluna);
+
+        } else if (chave.endsWith(",")) { //chave.split("\\[+[a-zA-z]([a-zA-Z]|[0-9]|_)*+(,|\\])")
+            chave = chave.substring(0, chave.length() - 1);
+            if (chave.startsWith("[")) {
+                getGravaToken("[", linha, coluna);
+                chave = chave.substring(1, chave.length());
             }
+            if (chave.endsWith("]")) {
+                getGravaToken(chave.substring(0, chave.length() - 1), linha, coluna);
+                getGravaToken("]", linha, coluna);
+            } else {
+                getGravaToken(chave, linha, coluna);
+            }
+            getGravaToken(",", linha, coluna);
         } else {
             getGravaToken(chave, linha, coluna);
         }
@@ -51,14 +60,16 @@ public class Main {
 
 
     public void getGravaToken(String chave, Integer linha, Integer coluna) {
-        if (PalavrasReservadas.palavrasReservadas.contains(chave)) {
-            System.out.println(chave + " - palavra reservada");
-        } else if (Delimitadores.delimitadores.contains(chave)) {
-            System.out.println(chave + " - delimitador");
-        } else if (chave.matches("[a-zA-z]([a-zA-z]|[0-9]|_)*")) {
-            System.out.println(chave + " - identificador");
-        } else {
-            System.out.println("[ERRO] Token não reconhecido linha " + linha + ", coluna " + coluna);
+        if (!chave.equals("")) {
+            if (PalavrasReservadas.palavrasReservadas.contains(chave)) {
+                System.out.println(chave + " - palavra reservada");
+            } else if (Delimitadores.delimitadores.contains(chave)) {
+                System.out.println(chave + " - delimitador");
+            } else if (chave.matches("[a-zA-z]([a-zA-z]|[0-9]|_)*")) {
+                System.out.println(chave + " - identificador");
+            } else {
+                System.out.println("[ERRO] Token não reconhecido linha " + linha + ", coluna " + coluna);
+            }
         }
     }
 

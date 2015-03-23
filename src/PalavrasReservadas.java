@@ -30,6 +30,8 @@ public class PalavrasReservadas {
     public static String RAISE = "raise"; //usado para sinalizar uma condição de exceção durante uma reação.
     public static String RESET = "reset"; //usada para propagar uma condição de exceção
 
+    public static String ENVIRONMENT = "environment";
+
     public static Collection<String> palavrasReservadas = new ArrayList<String>();
 
     static {
