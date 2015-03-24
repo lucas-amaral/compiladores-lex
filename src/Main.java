@@ -29,8 +29,8 @@ public class Main {
         if (!chave.equals("")) {
             Integer coluna = 1;
             for (String token : chave.split("/\\*(\\S| )*\\*/")) {
-                if (token.contains(PalavrasReservadas.WRITE+Delimitadores.ABRE_PARENTESES)  //Texto dentro do write()
-                        && token.contains("'") && token.contains(Delimitadores.FECHA_PARENTESES)) {
+                if (token.contains(PalavrasReservadas.WRITE+Delimitadores.ABRE_PARENTESES)
+                        && token.contains("'") && token.contains(Delimitadores.FECHA_PARENTESES)) { //Texto dentro do write()
                     getQuebraToken(token, Delimitadores.ABRE_PARENTESES, linha, coluna);
                 } else {
                     getQuebraToken(token, " ", linha, coluna);
@@ -141,9 +141,7 @@ public class Main {
         Scanner scanner = null;
         try {
             scanner = new Scanner(getArquivoEntrada()).useDelimiter("\\n");
-        } catch (FileNotFoundException e) {
-            System.out.println("[ERRO] Arquivo de entrada não encontrado " + e);
-        }
+        } catch (FileNotFoundException e) { /**/ }
         if (scanner != null) {
             for (int linha = 1; scanner.hasNext() ; linha++) {
                 getSeparaLinha(scanner.nextLine(), linha);
