@@ -19,6 +19,7 @@ public class Delimitadores {
     public static String HASH = "#";
 
     public static Collection<String> delimitadores = new ArrayList<String>();
+    public static Collection<String> caracteresReservadosExpressaoRegular = new ArrayList<String>();
 
     static {
         delimitadores.add(DOIS_PONTOS);
@@ -35,7 +36,19 @@ public class Delimitadores {
         delimitadores.add(HASH);
     }
 
+    static  {
+        caracteresReservadosExpressaoRegular.add(ABRE_PARENTESES);
+        caracteresReservadosExpressaoRegular.add(ABRE_CONCHETE);
+        caracteresReservadosExpressaoRegular.add(FECHA_PARENTESES);
+        caracteresReservadosExpressaoRegular.add(FECHA_CONCHETE);
+        caracteresReservadosExpressaoRegular.add(PONTO);
+    }
+
     public static Boolean getDelimitador(String token) {
         return delimitadores.contains(token);
+    }
+
+    public static Boolean getCaracterReservadoExpressaoRegular(String token) {
+        return caracteresReservadosExpressaoRegular.contains(token);
     }
 }

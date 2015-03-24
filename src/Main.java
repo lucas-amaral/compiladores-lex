@@ -29,7 +29,12 @@ public class Main {
         if (!chave.equals("")) {
             Integer coluna = 1;
             for (String token : chave.split("/\\*(\\S| )*\\*/")) {
-                getQuebraToken(token, " ", linha, coluna);
+                if (token.contains(PalavrasReservadas.WRITE+Delimitadores.ABRE_PARENTESES)  //Texto dentro do write()
+                        && token.contains("'") && token.contains(Delimitadores.FECHA_PARENTESES)) {
+                    getQuebraToken(token, Delimitadores.ABRE_PARENTESES, linha, coluna);
+                } else {
+                    getQuebraToken(token, " ", linha, coluna);
+                }
             }
         }
     }
@@ -40,9 +45,9 @@ public class Main {
             getGravaToken(quebra, linha, coluna);
         } else {
             String separador = quebra;
-            if (quebra.equals(Operadores.MAIS) || quebra.equals(Operadores.VEZES)) {
+            if (Operadores.getCaracterReservadoExpressaoRegular(quebra)) {
                 separador = "[" + quebra + "]";
-            } else if (quebra.equals(Delimitadores.ABRE_PARENTESES)) {
+            } else if (Delimitadores.getCaracterReservadoExpressaoRegular(quebra)) {
                 separador = "\\" + quebra;
             }
             for (String token : chave.split(separador)) {
@@ -53,31 +58,21 @@ public class Main {
                 gravaQuebra = true;
                 coluna += token.length();
             }
+            if (chave.endsWith(quebra)) {
+                getGravaToken(quebra, linha, coluna);
+            }
         }
     }
 
     public void getSeparaToken(String chave, Integer linha, Integer coluna) {
-//        if (chave.endsWith(Delimitadores.DOIS_PONTOS) && chave.split(Delimitadores.DOIS_PONTOS).length == 1) {
-//            getGravaToken(chave.split(Delimitadores.DOIS_PONTOS)[0], linha, coluna);
-//            getGravaToken(Delimitadores.DOIS_PONTOS, linha, coluna);
-//        } else if (chave.endsWith(Delimitadores.VIRGULA)) {
-//            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
-//            getGravaToken(Delimitadores.VIRGULA, linha, coluna);
-//        } else
-        if (chave.endsWith(Delimitadores.PONTO)) {
-            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
-            getGravaToken(Delimitadores.PONTO, linha, coluna);
-        } else if (chave.endsWith(Delimitadores.FECHA_CONCHETE)
-                && !chave.matches("([a-zA-Z]([a-zA-Z]|[0-9]|_)*)*#\\[[a-zA-Z]([a-zA-Z]|[0-9]|_)*\\]")) {
-            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
-            getGravaToken(Delimitadores.FECHA_CONCHETE, linha, coluna);
-        } else if (chave.startsWith(Delimitadores.ABRE_CONCHETE)
-                && !chave.matches("([a-zA-Z]([a-zA-Z]|[0-9]|_)*)*#\\[[a-zA-Z]([a-zA-Z]|[0-9]|_)*\\]")) {
-            getGravaToken(Delimitadores.ABRE_CONCHETE, linha, coluna);
-            getSeparaToken(chave.substring(1, chave.length()), linha, coluna);
-        } else if (chave.endsWith(Delimitadores.FECHA_PARENTESES)) {
-            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
-            getGravaToken(Delimitadores.FECHA_PARENTESES, linha, coluna);
+        if (chave.contains(Delimitadores.VIRGULA)) {
+            getQuebraToken(chave, Delimitadores.VIRGULA, linha, coluna);
+        } else if (chave.contains(Delimitadores.PONTO)) {
+            getQuebraToken(chave, Delimitadores.PONTO, linha, coluna);
+        } else if (chave.contains(Delimitadores.FECHA_CONCHETE)) {
+            getQuebraToken(chave, Delimitadores.FECHA_CONCHETE, linha, coluna);
+        } else if (chave.contains(Delimitadores.FECHA_PARENTESES)) {
+            getQuebraToken(chave, Delimitadores.FECHA_PARENTESES, linha, coluna);
         } else if (chave.contains(Delimitadores.SETA)) {
             getQuebraToken(chave, Delimitadores.SETA, linha, coluna);
         } else if (chave.contains(Delimitadores.DOIS_PONTOS_IGUAL)) {
@@ -86,12 +81,18 @@ public class Main {
             getQuebraToken(chave, Delimitadores.DOIS_PONTOS_TRACO, linha, coluna);
         } else if (chave.contains(Delimitadores.DOIS_PONTOS)) {
             getQuebraToken(chave, Delimitadores.DOIS_PONTOS, linha, coluna);
-        } else if (chave.contains(Delimitadores.VIRGULA)) {
-            getQuebraToken(chave, Delimitadores.VIRGULA, linha, coluna);
         } else if (chave.contains(Delimitadores.ATRIBUICAO)) {
             getQuebraToken(chave, Delimitadores.ATRIBUICAO, linha, coluna);
+        } else if (chave.contains(Delimitadores.ABRE_CONCHETE)) {
+            getQuebraToken(chave, Delimitadores.ABRE_CONCHETE, linha, coluna);
         } else if (chave.contains(Delimitadores.ABRE_PARENTESES)) {
             getQuebraToken(chave, Delimitadores.ABRE_PARENTESES, linha, coluna);
+        } else if (chave.contains(Delimitadores.HASH)) {
+            getQuebraToken(chave, Delimitadores.HASH, linha, coluna);
+        } else if (chave.contains(Operadores.MAIOR_IGUAL)) {
+            getQuebraToken(chave, Operadores.MAIOR_IGUAL, linha, coluna);
+        } else if (chave.contains(Operadores.MENOR_IGUAL)) {
+            getQuebraToken(chave, Operadores.MENOR_IGUAL, linha, coluna);
         } else if (chave.contains(Operadores.MAIS)) {
             getQuebraToken(chave, Operadores.MAIS, linha, coluna);
         } else if (chave.contains(Operadores.MENOS)) {
@@ -104,6 +105,10 @@ public class Main {
             getQuebraToken(chave, Operadores.MAIOR, linha, coluna);
         } else if (chave.contains(Operadores.MENOR)) {
             getQuebraToken(chave, Operadores.MENOR, linha, coluna);
+        } else if (chave.contains(Operadores.IGUAL)) {
+            getQuebraToken(chave, Operadores.IGUAL, linha, coluna);
+        } else if (chave.contains(Operadores.E)) {
+            getQuebraToken(chave, Operadores.E, linha, coluna);
         } else {
             getGravaToken(chave, linha, coluna);
         }
@@ -111,7 +116,8 @@ public class Main {
 
 
     public void getGravaToken(String chave, Integer linha, Integer coluna) {
-        if (!chave.equals("") && !chave.equals(" ")) {
+        chave = chave.trim();
+        if (!chave.equals("")) {
             if (PalavrasReservadas.getPalavraReservada(chave)) {
                 System.out.println(chave + " - palavra reservada");
             } else if (Delimitadores.getDelimitador(chave)) {
@@ -120,9 +126,10 @@ public class Main {
                 System.out.println(chave + " - operador");
             } else if (chave.matches("[0-9]([0-9])*")) {
                 System.out.println(chave + " - constante");
-            } else if (chave.matches("[a-zA-Z](\\w)*")
-                    || chave.matches("([a-zA-Z]([a-zA-Z]|[\\d]|_)*)*#\\[[a-zA-Z](\\w)*\\]")) {
+            } else if (chave.matches("[a-zA-Z](\\w)*")) {
                 System.out.println(chave + " - identificador");
+            } else if (chave.matches("'(\\w|\\W)*'")) {
+                System.out.println(chave + " - texto");
             } else {
                 System.out.println("[ERRO] Token não reconhecido linha " + linha + ", coluna " + coluna);
             }
