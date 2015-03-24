@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by lucasamaral on 19/03/15.
+ * 19/03/15.
  */
 public class PalavrasReservadas {
     public static final String MODULE = "module";

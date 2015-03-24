@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by lucasamaral on 23/03/15.
+ * 23/03/15.
  */
 public class Operadores {
     public static String MAIS = "+";

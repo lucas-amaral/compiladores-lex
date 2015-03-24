@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by lucasamaral on 19/03/15.
+ * 19/03/15.
  */
 public class Delimitadores {
     public static String DOIS_PONTOS = ":";
