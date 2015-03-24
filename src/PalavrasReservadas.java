@@ -31,6 +31,11 @@ public class PalavrasReservadas {
     public static String RESET = "reset"; //usada para propagar uma condição de exceção
 
     public static String ENVIRONMENT = "environment";
+    public static String USER_TERMINAL = "user_terminal";
+
+    public static String CASE = "case";
+    public static String ELSE = "else";
+    public static String IS = "is";
 
     public static Collection<String> palavrasReservadas = new ArrayList<String>();
 
@@ -50,9 +55,14 @@ public class PalavrasReservadas {
         palavrasReservadas.add(ON_EXCEPTION);
         palavrasReservadas.add(RAISE);
         palavrasReservadas.add(RESET);
+        palavrasReservadas.add(ENVIRONMENT);
+        palavrasReservadas.add(USER_TERMINAL);
+        palavrasReservadas.add(CASE);
+        palavrasReservadas.add(ELSE);
+        palavrasReservadas.add(IS);
     }
 
-    public Boolean getPalavraReservada(String token) {
+    public static Boolean getPalavraReservada(String token) {
         return palavrasReservadas.contains(token);
     }
 
