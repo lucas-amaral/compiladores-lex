@@ -16,6 +16,7 @@ public class Main {
         this.arquivoEntrada = arquivoEntrada;
     }
 
+    //Método que realiza a busca do arquivo no caminho informado como parâmetro do programa.
     public void getBuscaArquivo(String caminho) {
         URL url = getClass().getResource(caminho);
         try {
@@ -25,6 +26,7 @@ public class Main {
         }
     }
 
+    //Método que ignora os comentários da arquivo de entreda, e depois quebra os tokens pelos espaços em branco da linha.
     public void getSeparaLinha(String chave, Integer linha) {
         if (!chave.equals("")) {
             Integer coluna = 1;
@@ -39,6 +41,7 @@ public class Main {
         }
     }
 
+    //Método para realizar a separação de uma sequência de caracteres, separando-as pelos delimitador(quebra) passado por parâmetro.
     public void getQuebraToken(String chave, String quebra, Integer linha, Integer coluna) {
         boolean gravaQuebra = false;
         if (chave.equals(quebra)) {
@@ -64,6 +67,7 @@ public class Main {
         }
     }
 
+    //Método responsável por escolher qual delimitador/operador será utilizado para separar uma sequência de caracteres.
     public void getSeparaToken(String chave, Integer linha, Integer coluna) {
         if (chave.contains(Delimitadores.VIRGULA)) {
             getQuebraToken(chave, Delimitadores.VIRGULA, linha, coluna);
@@ -115,6 +119,7 @@ public class Main {
     }
 
 
+    //Método responsável por gravar o token no arquivo de saída.
     public void getGravaToken(String chave, Integer linha, Integer coluna) {
         chave = chave.trim();
         if (!chave.equals("")) {
@@ -137,6 +142,7 @@ public class Main {
     }
 
 
+    //Método responsável por iniciar a leitura do arquivo de entrada, separando-o por linhas
     public void inicia() {
         Scanner scanner = null;
         try {
@@ -150,6 +156,10 @@ public class Main {
         }
     }
 
+    /**
+     * Inicia um arquivo de saída chamado "tokens.txt" onde será guardado os tokens lidos do arquivo de entrada
+     * Recebe como argumento o caminho do arquivo de entrada e inicia a geração dos tokens
+     */
     public static void main(String []arg) throws IOException {
         try {
             arquivoSaida = new FileOutputStream("tokens.txt", true);

@@ -3,6 +3,7 @@ import java.util.Collection;
 
 /**
  * 19/03/15.
+ * Classe responsável por guardar todas os delimitadores da linguagem RS
  */
 public class Delimitadores {
     public static String DOIS_PONTOS = ":";
@@ -44,10 +45,12 @@ public class Delimitadores {
         caracteresReservadosExpressaoRegular.add(PONTO);
     }
 
+    //Método para verificar se token é um delimitador da linguagem
     public static Boolean getDelimitador(String token) {
         return delimitadores.contains(token);
     }
 
+    //Método que verifica se o delimitador é algum símbulo reservado da linguagem das expressões regulares em java
     public static Boolean getCaracterReservadoExpressaoRegular(String token) {
         return caracteresReservadosExpressaoRegular.contains(token);
     }

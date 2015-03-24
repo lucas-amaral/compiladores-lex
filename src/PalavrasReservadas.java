@@ -3,6 +3,7 @@ import java.util.Collection;
 
 /**
  * 19/03/15.
+ * Classe responsável por guardar todas as palavras reservadas da linguagem RS
  */
 public class PalavrasReservadas {
     public static final String MODULE = "module";
@@ -73,6 +74,7 @@ public class PalavrasReservadas {
         palavrasReservadas.add(WRITE);
     }
 
+    //Método para verificar se token é palavra reservada
     public static Boolean getPalavraReservada(String token) {
         return palavrasReservadas.contains(token);
     }

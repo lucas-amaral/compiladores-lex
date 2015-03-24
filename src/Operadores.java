@@ -3,6 +3,7 @@ import java.util.Collection;
 
 /**
  * 23/03/15.
+ * Classe responsável por guardar os operadores matemáticos e lógicos da linguagem RS
  */
 public class Operadores {
     public static String MAIS = "+";
