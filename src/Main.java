@@ -36,23 +36,23 @@ public class Main {
     }
 
     public void getSeparaToken(String chave, Integer linha, Integer coluna) {
-        if (chave.endsWith(":") && chave.split(":").length == 1) {
-            getGravaToken(chave.split(":")[0], linha, coluna);
-            getGravaToken(":", linha, coluna);
-
-        } else if (chave.endsWith(",")) { //chave.split("\\[+[a-zA-z]([a-zA-Z]|[0-9]|_)*+(,|\\])")
-            chave = chave.substring(0, chave.length() - 1);
-            if (chave.startsWith("[")) {
-                getGravaToken("[", linha, coluna);
-                chave = chave.substring(1, chave.length());
-            }
-            if (chave.endsWith("]")) {
-                getGravaToken(chave.substring(0, chave.length() - 1), linha, coluna);
-                getGravaToken("]", linha, coluna);
-            } else {
-                getGravaToken(chave, linha, coluna);
-            }
-            getGravaToken(",", linha, coluna);
+        if (chave.endsWith(Delimitadores.DOIS_PONTOS) && chave.split(Delimitadores.DOIS_PONTOS).length == 1) {
+            getGravaToken(chave.split(Delimitadores.DOIS_PONTOS)[0], linha, coluna);
+            getGravaToken(Delimitadores.DOIS_PONTOS, linha, coluna);
+        } else if (chave.endsWith(Delimitadores.VIRGULA)) { //chave.split("\\[+[a-zA-z]([a-zA-Z]|[0-9]|_)*+(,|\\])")
+            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
+            getGravaToken(Delimitadores.VIRGULA, linha, coluna);
+        } else if (chave.endsWith(Delimitadores.PONTO)) {
+            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
+            getGravaToken(Delimitadores.PONTO, linha, coluna);
+        } else if (chave.endsWith(Delimitadores.FECHA_CONCHETE)
+                && !chave.matches("[a-zA-Z]([a-zA-Z]|[0-9]|_)*#\\[[a-zA-Z]([a-zA-Z]|[0-9]|_)*\\]")) {
+            getSeparaToken(chave.substring(0, chave.length() - 1), linha, coluna);
+            getGravaToken(Delimitadores.FECHA_CONCHETE, linha, coluna);
+        } else if (chave.startsWith(Delimitadores.ABRE_CONCHETE)
+                && !chave.matches("[a-zA-Z]([a-zA-Z]|[0-9]|_)*#\\[[a-zA-Z]([a-zA-Z]|[0-9]|_)*\\]")) {
+            getGravaToken(Delimitadores.ABRE_CONCHETE, linha, coluna);
+            getSeparaToken(chave.substring(1, chave.length()), linha, coluna);
         } else {
             getGravaToken(chave, linha, coluna);
         }
